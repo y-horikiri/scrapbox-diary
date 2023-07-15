@@ -1,24 +1,47 @@
 <html>
-<textarea id="SCRAPBOX-TEXT"></textarea>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 
-<!-- Using https://thdoan.github.io/strftime/ -->
-<script src="js/strftime.js"></script>
-<script>
-$(function() {
-  const project = 'https://scrapbox.io/YOURPROJECT/';
-  $("#SCRAPBOX-TEXT").keydown(function(e) {
-    if (e.metaKey && e.keyCode == 13) {
-      if (confirm('Scrapbox日報に追記します。')) {
-        const text = $('#SCRAPBOX-TEXT').val();
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Scrapboxへの投稿フォーム">
+  <title>Scrapbox Poster</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/strftime/0.10.0/strftime.min.js"></script>
+</head>
+
+<body>
+
+  <textarea id="text"></textarea>
+  <button id="submit">送信</button>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/strftime@0.10.2/strftime-min.min.js"></script>
+  <script>
+    $(function () {
+      // ログインしていないと書き込めないので直書きで公開しても問題なし
+      const projectName = 'yhorikiri'
+      const projectURL = `https://scrapbox.io/${projectName}/`;
+
+      function submitToScrapbox() {
         const date = new Date();
-        const title = strftime("%Y%m%d", date);
-        window.open(project + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+        const text = `${$('#text').val()}
+${strftime("%H:%M", date)}`;
+        const title = strftime("%Y-%m-%d", date);
+        window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
       }
-      return false;
-    }
-    return true;
-  });
-});
-</script>
+
+      $("#text").keydown(function (e) {
+        if (e.metaKey && e.keyCode == 13) {
+          submitToScrapbox();
+          return false;
+        }
+        return true;
+      });
+      $("#submit").click(submitToScrapbox);
+    });
+  </script>
+</body>
+
 </html>
