@@ -36,6 +36,7 @@
 ${strftime("%H:%M", date)}`;
         const title = strftime("%Y-%m-%d", date);
         window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+        $('#text').val('');
       }
 
       $("#text").keydown(function (e) {
