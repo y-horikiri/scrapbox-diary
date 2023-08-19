@@ -48,6 +48,12 @@ ${strftime("%Y-%m-%d %H:%M", date)}`;
         return true;
       });
       $("#submit").click(submitToScrapbox);
+
+      // 開いた時にテキストボックスにフォーカスさせる
+      window.onload = function() {
+        document.getElementById("text").focus();
+      };
+
     });
   </script>
 </body>
