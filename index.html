@@ -1,61 +1,55 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Scrapboxへの投稿フォーム">
-  <title>Scrapbox Poster</title>
-  <style>
-    #text {
-      width: 100%;
-      height: 200px;
-      box-sizing: border-box;
-      font-size: 16px;
-    }
-  </style>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/strftime/0.10.0/strftime.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Scrapboxへの投稿フォーム">
+    <title>Scrapbox Poster</title>
+    <style>
+        #text {
+            width: 100%;
+            height: 200px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body>
 
-  <textarea id="text"></textarea>
-  <button id="submit">送信</button>
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/strftime@0.10.2/strftime-min.min.js"></script>
-  <script>
-    $(function () {
-      // ログインしていないと書き込めないので直書きで公開しても問題なし
-      const projectName = 'yhorikiri-underwater'
-      const projectURL = `https://scrapbox.io/${projectName}/`;
+    <textarea id="text"></textarea>
+    <button id="submit">送信</button>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/strftime@0.10.2/strftime-min.min.js"></script>
+    <script>
+        $(function () {
+            // ログインしていないと書き込めないので直書きで公開しても問題なし
+            const projectName = 'yhorikiri-underwater'
+            const projectURL = `https://scrapbox.io/${projectName}/`;
 
-      function submitToScrapbox() {
-        const date = new Date();
-        const text = `${$('#text').val()}
+            function submitToScrapbox() {
+                const date = new Date();
+                const text = `${$('#text').val()}
 ${strftime("%Y-%m-%d %H:%M", date)}`;
-        const title = strftime("%Y-%m", date);
-        window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
-        $('#text').val('');
-      }
+                const title = strftime("%Y-%m", date);
+                window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+                $('#text').val('');
+            }
 
-      $("#text").keydown(function (e) {
-        if (e.metaKey && e.keyCode == 13) {
-          submitToScrapbox();
-          return false;
-        }
-        return true;
-      });
-      $("#submit").click(submitToScrapbox);
+            $("#text").keydown(function (e) {
+                if (e.metaKey && e.keyCode == 13) {
+                    submitToScrapbox();
+                    return false;
+                }
+                return true;
+            });
+            $("#submit").click(submitToScrapbox);
 
-      // 開いた時にテキストボックスにフォーカスさせる
-      window.onload = function() {
-        document.getElementById("text").focus();
-      };
-
-    });
-  </script>
+            // 開いた時にテキストボックスにフォーカスさせる
+            $("#text").focus();
+        });
+    </script>
 </body>
 
 </html>
