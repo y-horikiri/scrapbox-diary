@@ -19,6 +19,7 @@
 
     <textarea id="text"></textarea>
     <button id="submit">送信</button>
+    <button id="submitNewTab">新しいタブで送信</button>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/strftime@0.10.2/strftime-min.min.js"></script>
@@ -37,6 +38,15 @@ ${strftime("%Y-%m-%d %H:%M", date)}`;
                 $('#text').val('');
             }
 
+            function submitToScrapboxInNewTab() {
+                const date = new Date();
+                const text = `${$('#text').val()}
+${strftime("%Y-%m-%d %H:%M", date)}`;
+                const title = strftime("%Y-%m", date);
+                window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+                $('#text').val('');
+            }
+
             $("#text").keydown(function (e) {
                 if (e.metaKey && e.keyCode == 13) {
                     submitToScrapbox();
@@ -45,6 +55,7 @@ ${strftime("%Y-%m-%d %H:%M", date)}`;
                 return true;
             });
             $("#submit").click(submitToScrapbox);
+            $("#submitNewTab").click(submitToScrapbox);
 
             // 開いた時にテキストボックスにフォーカスさせる
             $("#text").focus();
