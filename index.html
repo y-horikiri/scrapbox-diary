@@ -33,7 +33,7 @@
                 const text = `${$('#text').val()}
 ${strftime("%Y-%m-%d %H:%M", date)}`;
                 const title = strftime("%Y-%m", date);
-                window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+                window.location.href = projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text);
                 $('#text').val('');
             }
 
