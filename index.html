@@ -29,10 +29,15 @@
             const projectName = 'yhorikiri-underwater'
             const projectURL = `https://scrapbox.io/${projectName}/`;
 
+            function dateStr(date) {
+                const dayJa = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+                return `${strftime("%Y-%m-%d", date)} (${dayJa}) ${strftime("%H:%M", date)}`
+            }
+
             function submitToScrapbox() {
                 const date = new Date();
                 const text = `${$('#text').val()}
-${strftime("%Y-%m-%d %H:%M", date)}`;
+${dateStr(date)}`;
                 const title = strftime("%Y-%m", date);
                 window.location.href = projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text);
                 $('#text').val('');
@@ -41,7 +46,7 @@ ${strftime("%Y-%m-%d %H:%M", date)}`;
             function submitToScrapboxInNewTab() {
                 const date = new Date();
                 const text = `${$('#text').val()}
-${strftime("%Y-%m-%d %H:%M", date)}`;
+${dateStr(date)}`;
                 const title = strftime("%Y-%m", date);
                 window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
                 $('#text').val('');
