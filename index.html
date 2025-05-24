@@ -28,27 +28,39 @@
             // ログインしていないと書き込めないので直書きで公開しても問題なし
             const projectName = 'yhorikiri-underwater'
             const projectURL = `https://scrapbox.io/${projectName}/`;
+            const dayJa = ['日', '月', '火', '水', '木', '金', '土'];
+
+            function getDayJa(date) {
+                return ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
+            }
 
             function dateStr(date) {
-                const dayJa = ['日', '月', '火', '水', '木', '金', '土'][date.getDay()];
-                return `${strftime("%Y-%m-%d", date)} (${dayJa}) ${strftime("%H:%M", date)}`
+                return `${strftime("%Y-%m-%d", date)} (${getDayJa(date)}) ${strftime("%H:%M", date)}`
+            }
+
+            function buildTitle(input, date) {
+                return `${strftime("%Y-%m", date)}`;
+            }
+
+            function buildBody(input, date) {
+                return `${$('#text').val()}
+${dateStr(date)}`;
             }
 
             function submitToScrapbox() {
+                const input = $('#text').val();
                 const date = new Date();
-                const text = `${$('#text').val()}
-${dateStr(date)}`;
-                const title = strftime("%Y-%m", date);
-                window.location.href = projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text);
+                const title = buildTitle(input, date);
+                const body = buildBody(input, date);
+                window.location.href = projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(body);
                 $('#text').val('');
             }
 
             function submitToScrapboxInNewTab() {
                 const date = new Date();
-                const text = `${$('#text').val()}
-${dateStr(date)}`;
-                const title = strftime("%Y-%m", date);
-                window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(text));
+                const title = buildTitle(date);
+                const body = buildBody(date);
+                window.open(projectURL + encodeURIComponent(title) + '?body=' + encodeURIComponent(body));
                 $('#text').val('');
             }
 
